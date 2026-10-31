@@ -1,0 +1,34 @@
+# Models by analogy — a route of pi-ai models cloned from installed catalog models.
+#
+# Only the plugin row is declared here. The model roster itself is written into
+# llm-pi-ai's own configuration through `ctx.settings.update`, so the route it
+# produces is an ordinary hand-declared pi-ai route: it shows up on the Models
+# page, in the model picker, and it is restored on restart like any other entry
+# in this profile.
+- insert:
+    - id: model-analogs
+      name: dsh-model-analogs
+      disabled: false
+      config:
+        # Which profile entry the roster is written into, and the catalog route
+        # analogies are resolved from.
+        settingsNs: llm-pi-ai
+        catalogRoute: openrouter
+        # The route this plugin owns. A separate route keeps the installed
+        # openrouter catalog untouched: a `models` list on a catalog route
+        # replaces that whole catalog.
+        route: openrouter-analog
+        routeName: OpenRouter (analogs)
+        apiKeyEnv: OPENROUTER_API_KEY
+        baseURL: https://openrouter.ai/api/v1
+        api: openai-completions
+        # Wire switches for the protocol. `thinkingFormat: openrouter` is what
+        # makes reasoning levels ride the OpenRouter dialect; the other two match
+        # what the shipped catalog declares for OpenRouter models.
+        thinkingFormat: openrouter
+        supportsDeveloperRole: false
+        supportsStrictMode: true
+        # The wire value that means "do not reason" on this route.
+        offWire: none
+        # The card's HTTP channel, registered by this plugin on the Web server.
+        path: /model-analogs/api
